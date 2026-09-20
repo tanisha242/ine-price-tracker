@@ -1,5 +1,5 @@
-import React from "react";
 import { RefreshCw, BarChart2, Trash2, Clock, AlertTriangle, CheckCircle2, RotateCw } from "lucide-react";
+import { ProductCategoryIcon } from "./ProductCategoryIcon";
 
 export function TrackedProductsList({ trackedProducts, onScrapeSingle, onSelectProduct, onDeleteTracked, scrapingIds }) {
   if (trackedProducts.length === 0) {
@@ -62,30 +62,50 @@ export function TrackedProductsList({ trackedProducts, onScrapeSingle, onSelectP
               }}
             >
               <div>
-                {/* Header Badge Row */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
-                  <span className="badge badge-retried" style={{ fontSize: "0.65rem" }}>
-                    {product.category || "General"}
-                  </span>
+                {/* Header Badge & Icon Row */}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
+                  <div
+                    style={{
+                      width: "42px",
+                      height: "42px",
+                      borderRadius: "10px",
+                      backgroundColor: "var(--rose-light)",
+                      border: "1px solid var(--status-retried-border)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "var(--rose-deep)",
+                      flexShrink: 0
+                    }}
+                    title={product.category || "Category"}
+                  >
+                    <ProductCategoryIcon productName={product.name} category={product.category} size={22} />
+                  </div>
                   
-                  {status === "SUCCESS" && (
-                    <span className="badge badge-success">
-                      <CheckCircle2 size={11} /> Success
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px" }}>
+                    <span className="badge badge-retried" style={{ fontSize: "0.65rem" }}>
+                      {product.category || "General"}
                     </span>
-                  )}
-                  {status === "RETRIED" && (
-                    <span className="badge badge-retried">
-                      <RotateCw size={11} /> Retried
-                    </span>
-                  )}
-                  {status === "FAILED" && (
-                    <span className="badge badge-failed">
-                      <AlertTriangle size={11} /> Failed
-                    </span>
-                  )}
-                  {!status && (
-                    <span className="badge badge-neutral">Pending</span>
-                  )}
+
+                    {status === "SUCCESS" && (
+                      <span className="badge badge-success">
+                        <CheckCircle2 size={11} /> Success
+                      </span>
+                    )}
+                    {status === "RETRIED" && (
+                      <span className="badge badge-retried">
+                        <RotateCw size={11} /> Retried
+                      </span>
+                    )}
+                    {status === "FAILED" && (
+                      <span className="badge badge-failed">
+                        <AlertTriangle size={11} /> Failed
+                      </span>
+                    )}
+                    {!status && (
+                      <span className="badge badge-neutral">Pending</span>
+                    )}
+                  </div>
                 </div>
 
                 <h3

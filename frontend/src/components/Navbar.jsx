@@ -1,4 +1,3 @@
-import React from "react";
 import { RefreshCw, ExternalLink, TrendingUp } from "lucide-react";
 
 export function Navbar({ onScrapeAll, isScrapingAll }) {

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { X, RefreshCw, ExternalLink, Calendar, AlertCircle, CheckCircle, RotateCw } from "lucide-react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { ProductCategoryIcon } from "./ProductCategoryIcon";
 
 export function ProductDetailModal({ API_BASE_URL, trackedProductId, onClose, onManualScrape }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isScraping, setIsScraping] = useState(false);
 
-  const fetchDetail = async () => {
-    setLoading(true);
+  const refreshData = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/api/tracked-products/${trackedProductId}`);
       if (res.ok) {
@@ -17,19 +17,33 @@ export function ProductDetailModal({ API_BASE_URL, trackedProductId, onClose, on
       }
     } catch (err) {
       console.error("Fetch detail error:", err);
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchDetail();
-  }, [trackedProductId, API_BASE_URL]);
+    let isMounted = true;
+    fetch(`${API_BASE_URL}/api/tracked-products/${trackedProductId}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((result) => {
+        if (isMounted) {
+          if (result) setData(result);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.error("Fetch detail error:", err);
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [API_BASE_URL, trackedProductId]);
 
   const handleScrapeNow = async () => {
     setIsScraping(true);
     await onManualScrape(trackedProductId);
-    await fetchDetail();
+    await refreshData();
     setIsScraping(false);
   };
 
@@ -97,18 +111,41 @@ export function ProductDetailModal({ API_BASE_URL, trackedProductId, onClose, on
           <div>
             {/* Header info */}
             <div style={{ marginBottom: "24px" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
-                <span className="badge badge-retried" style={{ fontSize: "0.65rem" }}>
-                  {product.category || "General"}
-                </span>
-                <span className="font-mono" style={{ fontSize: "0.775rem", color: "var(--text-secondary)" }}>
-                  SKU: {product.sku}
-                </span>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "16px" }}>
+                <div
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "10px",
+                    backgroundColor: "var(--rose-light)",
+                    border: "1px solid var(--status-retried-border)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "var(--rose-deep)",
+                    flexShrink: 0
+                  }}
+                  title={product.category || "Category"}
+                >
+                  <ProductCategoryIcon productName={product.name} category={product.category} size={24} />
+                </div>
+
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px" }}>
+                    <span className="badge badge-retried" style={{ fontSize: "0.65rem" }}>
+                      {product.category || "General"}
+                    </span>
+                    <span className="font-mono" style={{ fontSize: "0.775rem", color: "var(--text-secondary)" }}>
+                      SKU: {product.sku}
+                    </span>
+                  </div>
+                  <h2 className="font-serif" style={{ fontSize: "1.8rem", fontWeight: "600", color: "var(--text-charcoal)" }}>
+                    {product.name}
+                  </h2>
+                </div>
               </div>
-              <h2 className="font-serif" style={{ fontSize: "1.8rem", fontWeight: "600", color: "var(--text-charcoal)" }}>
-                {product.name}
-              </h2>
-              <div style={{ display: "flex", gap: "16px", marginTop: "6px", fontSize: "0.825rem", color: "var(--text-secondary)" }}>
+
+              <div style={{ display: "flex", gap: "16px", marginTop: "10px", fontSize: "0.825rem", color: "var(--text-secondary)" }}>
                 <span>Brand: <strong style={{ color: "var(--text-charcoal)" }}>{product.brand || "INE Store"}</strong></span>
                 <a
                   href={product.product_url}

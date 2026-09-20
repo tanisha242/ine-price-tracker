@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Navbar } from "./components/Navbar";
 import { ProductSearch } from "./components/ProductSearch";
 import { TrackedProductsList } from "./components/TrackedProductsList";
@@ -33,10 +33,26 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetchTrackedProducts();
-    const interval = setInterval(fetchTrackedProducts, 10000);
-    return () => clearInterval(interval);
-  }, [fetchTrackedProducts]);
+    let isMounted = true;
+    const loadData = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/tracked-products`);
+        if (res.ok && isMounted) {
+          const data = await res.json();
+          setTrackedProducts(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch tracked products:", err);
+      }
+    };
+
+    loadData();
+    const interval = setInterval(loadData, 10000);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
 
   // Track product
   const handleTrackProduct = async (product) => {

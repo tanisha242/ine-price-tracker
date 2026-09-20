@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Search, Plus, Check, Loader2 } from "lucide-react";
+import { ProductCategoryIcon } from "./ProductCategoryIcon";
 
 export function ProductSearch({ API_BASE_URL, trackedProductIds, onTrackProduct }) {
   const [query, setQuery] = useState("");
@@ -86,14 +87,35 @@ export function ProductSearch({ API_BASE_URL, trackedProductIds, onTrackProduct 
                 }}
               >
                 <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
-                    <span className="badge badge-retried" style={{ fontSize: "0.65rem" }}>
-                      {prod.category || "General"}
-                    </span>
-                    <span className="font-mono" style={{ fontSize: "0.7rem", color: "var(--text-secondary)" }}>
-                      {prod.sku}
-                    </span>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
+                    <div
+                      style={{
+                        width: "36px",
+                        height: "36px",
+                        borderRadius: "8px",
+                        backgroundColor: "var(--rose-light)",
+                        border: "1px solid var(--status-retried-border)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "var(--rose-deep)",
+                        flexShrink: 0
+                      }}
+                      title={prod.category || "Category"}
+                    >
+                      <ProductCategoryIcon productName={prod.name} category={prod.category} size={18} />
+                    </div>
+
+                    <div style={{ textAlign: "right" }}>
+                      <span className="badge badge-retried" style={{ fontSize: "0.65rem", display: "inline-block" }}>
+                        {prod.category || "General"}
+                      </span>
+                      <div className="font-mono" style={{ fontSize: "0.675rem", color: "var(--text-secondary)", marginTop: "2px" }}>
+                        {prod.sku}
+                      </div>
+                    </div>
                   </div>
+
                   <h3 style={{ fontSize: "0.925rem", fontWeight: "600", marginBottom: "4px", color: "var(--text-charcoal)", lineHeight: 1.3 }}>
                     {prod.name}
                   </h3>
