@@ -1,15 +1,4 @@
--- ============================================
--- INE PRICE TRACKER DATABASE
--- ============================================
-
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
-
-
--- ============================================
--- PRODUCTS
--- Stores products discovered from INE Store
--- ============================================
-
 CREATE TABLE IF NOT EXISTS products (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
@@ -29,13 +18,6 @@ CREATE TABLE IF NOT EXISTS products (
 
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-
-
--- ============================================
--- TRACKED PRODUCTS
--- Stores products selected by users for tracking
--- ============================================
-
 CREATE TABLE IF NOT EXISTS tracked_products (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
@@ -49,12 +31,6 @@ CREATE TABLE IF NOT EXISTS tracked_products (
 
     UNIQUE(product_id)
 );
-
-
--- ============================================
--- PRICE HISTORY
--- One successful scrape = one history record
--- ============================================
 
 CREATE TABLE IF NOT EXISTS price_history (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -71,12 +47,6 @@ CREATE TABLE IF NOT EXISTS price_history (
 
     scraped_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-
-
--- ============================================
--- SCRAPE LOGS
--- Every attempt is recorded here
--- ============================================
 
 CREATE TABLE IF NOT EXISTS scrape_logs (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -114,11 +84,6 @@ CREATE TABLE IF NOT EXISTS scrape_logs (
 
     duration_ms INTEGER
 );
-
-
--- ============================================
--- INDEXES
--- ============================================
 
 CREATE INDEX IF NOT EXISTS idx_products_name
 ON products USING gin (
