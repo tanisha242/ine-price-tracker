@@ -4,7 +4,7 @@ Full-stack web application built for the **INE Software Engineer Intern Assignme
 
 ---
 
-## 🌟 Tech Stack
+##  Tech Stack
 
 - **Frontend**: React (Vite), Recharts, Lucide Icons, Glassmorphism Vanilla CSS Design System (Deployable to Vercel).
 - **Backend**: Node.js, Express, Playwright (Deployable to Render.com).
@@ -13,7 +13,7 @@ Full-stack web application built for the **INE Software Engineer Intern Assignme
 
 ---
 
-## 🚀 How to Run the Code Locally
+##  How to Run the Code Locally
 
 ### Prerequisites
 - Node.js (v18 or higher)
@@ -75,7 +75,7 @@ The React dashboard will run at `http://localhost:5173`.
 
 ---
 
-## ⚙️ Scheduled Scraping (Every 2 Hours)
+##  Scheduled Scraping (Every 2 Hours)
 
 Because free-tier backends (Render) go to sleep after inactivity, scheduled scraping is triggered via an external cron service (**cron-job.org**):
 - **URL**: `https://your-backend-render-url.onrender.com/api/cron/scrape-all`
@@ -85,7 +85,7 @@ Because free-tier backends (Render) go to sleep after inactivity, scheduled scra
 
 ---
 
-## 📊 Deployment Guide
+##  Deployment Guide
 
 - **Frontend (Vercel)**: Connect your GitHub repo, set root directory to `frontend`, and environment variable `VITE_API_BASE_URL`.
 - **Backend (Render)**: Create a Web Service from the repo, root directory `backend`, build command `npm install`, start command `npm start`, and configure `.env` secrets.
