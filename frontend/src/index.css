@@ -1,0 +1,245 @@
+/* Soft Monochrome + Dusty Rose Design System */
+
+:root {
+  /* Color Palette */
+  --bg-page: #F7F6F3;
+  --bg-surface: #FFFFFF;
+  --text-charcoal: #242326;
+  --text-secondary: #8C8988;
+  --border-color: #E6E3E1;
+
+  --rose-primary: #B98F91;
+  --rose-deep: #8F6265;
+  --rose-light: #F1E5E6;
+
+  /* Status Badges */
+  --status-success-bg: #EAEFEA;
+  --status-success-text: #3D6B49;
+  --status-success-border: #CBDACD;
+
+  --status-retried-bg: var(--rose-light);
+  --status-retried-text: var(--rose-deep);
+  --status-retried-border: #E4C8CA;
+
+  --status-failed-bg: #F3E4E5;
+  --status-failed-text: #63262A;
+  --status-failed-border: #D6B5B7;
+
+  /* Typography */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-charcoal);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Card Surface */
+.rose-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(36, 35, 38, 0.02);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rose-card:hover {
+  border-color: #D4CFCC;
+}
+
+/* Typography Helpers */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  font-family: var(--font-sans);
+}
+
+.btn-rose {
+  background-color: var(--rose-primary);
+  color: #FFFFFF;
+}
+
+.btn-rose:hover {
+  background-color: var(--rose-deep);
+}
+
+.btn-rose:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-charcoal);
+  border-color: var(--border-color);
+}
+
+.btn-outline:hover {
+  background-color: var(--bg-page);
+  border-color: var(--rose-primary);
+  color: var(--rose-deep);
+}
+
+.btn-tracked {
+  background-color: var(--rose-light);
+  color: var(--rose-deep);
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.btn-danger-outline {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.btn-danger-outline:hover {
+  background-color: var(--status-failed-bg);
+  color: var(--status-failed-text);
+  border-color: var(--status-failed-border);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 0.725rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+}
+
+.badge-success {
+  background-color: var(--status-success-bg);
+  color: var(--status-success-text);
+  border: 1px solid var(--status-success-border);
+}
+
+.badge-retried {
+  background-color: var(--status-retried-bg);
+  color: var(--status-retried-text);
+  border: 1px solid var(--status-retried-border);
+}
+
+.badge-failed {
+  background-color: var(--status-failed-bg);
+  color: var(--status-failed-text);
+  border: 1px solid var(--status-failed-border);
+}
+
+.badge-neutral {
+  background-color: var(--bg-page);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* Inputs */
+.rose-input {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--text-charcoal);
+  border-radius: 8px;
+  padding: 11px 14px 11px 40px;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: var(--font-sans);
+}
+
+.rose-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.rose-input:focus {
+  border-color: var(--rose-primary);
+  box-shadow: 0 0 0 3px rgba(185, 143, 145, 0.15);
+}
+
+/* Table Styling */
+.rose-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.825rem;
+}
+
+.rose-table th {
+  background-color: var(--bg-page);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.7rem;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.rose-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-charcoal);
+}
+
+.rose-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+::-webkit-scrollbar-thumb {
+  background: #D4CFCC;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Spin animation */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin-animation {
+  animation: spin 1s linear infinite;
+}

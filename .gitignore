@@ -1,0 +1,15 @@
+# Dependency directories
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs and scratch files
+*.log
+logs/
+scratch/
+dist/
+build/
+.DS_Store
